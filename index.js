@@ -1,4 +1,14 @@
 
+// notre modal au milieu de la fenetre
+
+const modale = document.querySelector('.start');
+const boutonModale = document.querySelector('.btnstart');
+
+
+const touche = document.querySelector('.touche');
+const boutonRestart = document.querySelector('.btnrestart');
+
+
 ////// CREATION DU CANVAS ET DU CONTEXTE /////////////////////////////////////////////
 
 
@@ -8,8 +18,6 @@ canvas.width = innerWidth;
 canvas.height = innerHeight;
 
 const ctx = canvas.getContext('2d');
-
-
 
 
 ///////// MA CLASSE ENTITY ///////////////////////////////////////////////////
@@ -134,7 +142,9 @@ projectiles.push(projectile);
 
 
 ////////// MA FONCTION ANIMATE ////////////////////////////////////////////////////////////////////
-
+let score = 0;
+let scoco = document.querySelector('.parascore');
+scoco.innerHTML = score;
 
 let animationId;
 
@@ -188,6 +198,10 @@ for (let i = 0; i < 8; i++) {
     );
   }
 
+score += 100;
+
+scoco.innerHTML = score;
+
 
                 if(ennemie.radius - 10 > 5){
                     gsap.to(ennemie, {
@@ -206,6 +220,12 @@ projectiles.splice(projectileIndex, 1);
         const distance2 = Math.hypot(player.x - ennemie.x, player.y - ennemie.y);
         if (distance2 - player.radius - ennemie.radius <= 0) {
             cancelAnimationFrame(animationId);
+//             for(let i =0; i < enemies.length; i++){
+// enemies.splice(i, 1);
+//             }
+
+touche.style.display = 'flex';
+
 
          }
 
@@ -216,7 +236,7 @@ projectiles.splice(projectileIndex, 1);
 
 
 }
-animate();
+
 
 
 //////////// MA FONCTION CREATION ENNEMIES //////////////////////////////////////////////////////////////////
@@ -255,4 +275,22 @@ function spawnEnemies() {
         enemies.push(new Ennemies(x, y, radius, color, velocity));
     }, 1000);
 }
-spawnEnemies();
+
+
+
+boutonModale.addEventListener('click', () => {
+    animate();
+    spawnEnemies();
+    modale.style.display = 'none';
+});
+
+
+boutonRestart.addEventListener('click', () => {
+
+    ctx.clearRect(0, 0, 2000, 2000);
+    animate();
+    spawnEnemies();
+
+    touche.style.display = 'none';
+});
+
