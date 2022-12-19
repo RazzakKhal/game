@@ -69,7 +69,7 @@ class Projectile extends Player{
 }
 
 
-const projectiles = [];
+let projectiles = [];
 
 
 
@@ -86,7 +86,7 @@ super(x, y, radius, color, velocity);
 
 
 
-const enemies = [];
+let enemies = [];
 
 
 
@@ -118,7 +118,7 @@ draw() {
   }
 }
 
-const particles = [];
+let particles = [];
 
 ///////// MON EVENEMENT DE CLIQUE ///////////////////////////////////////////////////////
 
@@ -220,9 +220,7 @@ projectiles.splice(projectileIndex, 1);
         const distance2 = Math.hypot(player.x - ennemie.x, player.y - ennemie.y);
         if (distance2 - player.radius - ennemie.radius <= 0) {
             cancelAnimationFrame(animationId);
-//             for(let i =0; i < enemies.length; i++){
-// enemies.splice(i, 1);
-//             }
+
 
 touche.style.display = 'flex';
 
@@ -287,7 +285,12 @@ boutonModale.addEventListener('click', () => {
 
 boutonRestart.addEventListener('click', () => {
 
-    ctx.clearRect(0, 0, 2000, 2000);
+    projectiles = [];
+    enemies = [];
+    particles = [];
+    score = 0;
+    scoco.innerText = score;
+
     animate();
     spawnEnemies();
 
